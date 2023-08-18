@@ -9,14 +9,49 @@
 
 .navbar {
     height: 4rem;
+    background-color: rgb(2, 36, 72);
+}
+
+.navbar img {
+    height: 2.5rem;
 }
 
 .container {
     min-height: calc(100vh - 9rem);
 }
 
+.head {
+    background-color: rgba(115, 166, 221, 0.3);
+}
+
+.add-book {
+    background-color: rgb(2, 36, 72);
+    border: none !important;
+}
+
+.add-book:hover, .add-book:active {
+    background-color: rgba(2, 36, 72, 0.8) !important;
+}
+
+.add-book:active {
+    transform: scale(0.98);
+}
+
 .books-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    grid-template-columns: repeat(3, minmax(20rem, 1fr));
     gap: 1rem;
+}
+
+#book-number, #page {
+    margin: 0 !important;
+}
+
+#page {
+    font-weight: 300;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
 }
