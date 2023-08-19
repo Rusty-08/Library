@@ -3,9 +3,8 @@
 
 const bookContainer = document.querySelector('.books-container');
 const addBook = document.getElementById('add-submit')
-const addBookBtn = document.querySelector('.add-book');
 
-let bookCount = 1
+let library = []
 class Book {
     constructor(
         title = 'Unknown',
@@ -45,7 +44,6 @@ const createBookCard = (book) => {
 
     cardHeader.className = 'card-header'
 
-    bookNumber.textContent = `# ${bookCount++}`;
     bookPage.innerHTML = `${book.page} <span>pages</span>`
 
     cardHeader.append(bookNumber)
@@ -81,6 +79,17 @@ const createBookCard = (book) => {
         cardRead.classList.add('btn-danger')
     }
 
+    cardRead.addEventListener('click', () => {
+        cardRead.classList.toggle('btn-success');
+        cardRead.classList.toggle('btn-danger');
+
+        if (cardRead.textContent === 'Read') {
+            cardRead.textContent = 'Not read';
+        } else {
+            cardRead.textContent = 'Read';
+        }
+    });
+
     cardBody.append(cardTitle)
     cardBody.append(cardAuthor)
     cardBody.append(cardRead)
@@ -95,6 +104,17 @@ const createBookCard = (book) => {
     card.append(cardBody)
 
     bookContainer.append(card)
+
+    // ! The cardNumber is not yet adjusting to its index/length when some card is removed
+
+    library.push(card)
+
+    bookNumber.textContent = `# ${library.length}`;
+
+    removeCard.addEventListener('click', () => {
+        bookContainer.removeChild(card)
+        library.splice(card, 1)
+    })
 }
 
 // Clear input fields after adding a book
