@@ -3,7 +3,9 @@
 
 const bookContainer = document.querySelector('.books-container');
 const addBook = document.getElementById('add-submit')
+const addBookBtn = document.querySelector('.add-book');
 
+let bookCount = 1
 class Book {
     constructor(
         title = 'Unknown',
@@ -14,21 +16,22 @@ class Book {
         this.title = title,
             this.author = author,
             this.page = page,
-            this.isread = isRead
+            this.isRead = isRead
     }
 }
 
 const getBookDetails = () => {
-    const book_title = document.getElementById('title').value
-    const book_author = document.getElementById('author').value
-    const book_page = document.getElementById('page').value
-    const book_isRead = document.getElementById('read').checked
+    const book_title = document.getElementById('form_title').value
+    const book_author = document.getElementById('form_author').value
+    const book_page = document.getElementById('form_page').value
+    const book_isRead = document.getElementById('form_read').checked
     return new Book(book_title, book_author, book_page, book_isRead)
 }
 
 const updateBook = () => {
     let newBook = getBookDetails()
     createBookCard(newBook)
+    clearInputFields()
 }
 
 const createBookCard = (book) => {
@@ -42,9 +45,8 @@ const createBookCard = (book) => {
 
     cardHeader.className = 'card-header'
 
-    let i = 1
-    bookNumber.textContent = `# ${i++}`
-    bookPage.textContent = `${book.page} pages`
+    bookNumber.textContent = `# ${bookCount++}`;
+    bookPage.innerHTML = `${book.page} <span>pages</span>`
 
     cardHeader.append(bookNumber)
     cardHeader.append(bookPage)
@@ -62,13 +64,13 @@ const createBookCard = (book) => {
     removeCard.setAttribute('id', 'remove-btn')
 
     cardTitle.className = 'card-title'
-    cardAuthor.className = 'card-subtitle fw-light mb-3'
+    cardAuthor.className = 'card-subtitle fw-light mb-1'
     cardRead.className = 'btn btn-sm'
-    removeCard.className = 'btn btn-sm btn-danger'
+    removeCard.className = 'btn btn-sm btn-danger m-2'
     cardBody.className = 'card-body text-center'
 
-    cardTitle.textContent = `${book.title}`
-    cardAuthor.textContent = `${book.author}`
+    cardTitle.textContent = book.title
+    cardAuthor.textContent = book.author
     removeCard.textContent = 'Remove'
 
     if (book.isRead) {
@@ -95,4 +97,12 @@ const createBookCard = (book) => {
     bookContainer.append(card)
 }
 
-addBook.addEventListener('click', updateBook);
+// Clear input fields after adding a book
+const clearInputFields = () => {
+    document.getElementById('form_title').value = '';
+    document.getElementById('form_author').value = '';
+    document.getElementById('form_page').value = '';
+    document.getElementById('form_read').checked = false;
+}
+
+addBook.addEventListener('click', updateBook)

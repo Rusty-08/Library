@@ -27,20 +27,7 @@
           New Book
         </button>
       </div>
-      <div class="books-container mt-4 px-4">
-        <div class="card">
-          <div class="card-header d-flex justify-content-between">
-            <p class="m-0" id="book-number">#</p>
-            <p class="m-0 fw-light" id="page"> pages</p>
-          </div>
-          <div class="card-body text-center">
-            <h5 class="card-title" id="title">Title of book</h5>
-            <p class="card-subtitle fw-light mb-3" id="author">Author</p>
-            <a href="#" class="btn btn-success btn-sm" id="read-btn">Read</a>
-            <a href="#" class="btn btn-danger btn-sm" id="remove-btn">Remove</a>
-          </div>
-        </div>
-      </div>
+      <div class="books-container mt-4 px-4"></div>
     </div>
     
     <!-- Modal -->
@@ -55,25 +42,25 @@
             <form class="px-3">
               <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
-                <input type="text" class="form-control" id="title">
+                <input type="text" class="form-control" id="form_title" name="title">
               </div>
               <div class="mb-3">
                 <label for="author" class="form-label">Author</label>
-                <input type="text" class="form-control" id="author">
+                <input type="text" class="form-control" id="form_author" name="author">
               </div>
               <div class="mb-3">
                 <label for="page" class="form-label">Page</label>
-                <input type="number" class="form-control" id="page">
+                <input type="number" class="form-control" id="form_page" name="page">
               </div>
               <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="read">
-                <label class="form-check-label" for="read">Read already?</label>
+                <input type="checkbox" class="form-check-input" id="form_read" name="read">
+                <label class="form-check-label" for="form_read">Read already?</label>
               </div>
             </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" id="add-submit">Submit</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="add-submit">Submit</button>
           </div>
         </div>
       </div>
