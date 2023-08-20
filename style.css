@@ -18,6 +18,7 @@
 
 .container {
     min-height: calc(100vh - 9rem);
+    border: 1px solid rgba(115, 166, 221, 0.3);
 }
 
 .head {
@@ -59,4 +60,8 @@
 .form-check-input {
     width: 1.5rem !important;
     height: 1.5rem !important;
+}
+
+.modal-dialog {
+    margin-top: calc((100vh - 462px) / 2) !important;
 }

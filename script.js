@@ -3,6 +3,7 @@
 
 const bookContainer = document.querySelector('.books-container');
 const addBook = document.getElementById('add-submit')
+const bookForm = document.getElementById('book-form')
 
 let library = []
 class Book {
@@ -32,7 +33,7 @@ const updateBook = () => {
     library.push(newBook)
     setData()
     render()
-    clearInputFields()
+    bookForm.reset()
 }
 
 function render() {
@@ -55,7 +56,7 @@ const createBookCard = (book) => {
 
     cardHeader.className = 'card-header'
 
-    bookPage.innerHTML = `${book.page} <span>pages</span>`
+    bookPage.innerHTML = `${book.page.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span>pages</span>`
 
     cardHeader.append(bookNumber)
     cardHeader.append(bookPage)
@@ -75,32 +76,41 @@ const createBookCard = (book) => {
     cardTitle.className = 'card-title'
     cardAuthor.className = 'card-subtitle fw-light mb-1'
     cardRead.className = 'btn btn-sm'
-    removeCard.className = 'btn btn-sm btn-danger m-2'
+    removeCard.className = 'btn btn-sm m-2 text-light'
     cardBody.className = 'card-body text-center'
+    removeCard.style.background = '#FF6969'
 
     cardTitle.textContent = book.title
     cardAuthor.textContent = book.author
     removeCard.innerHTML = '<i class="fa-solid fa-trash-can"></i>'
 
+    const bookRead = (book) => {
+        book.isRead = true;
+        cardRead.textContent = 'Read';
+        cardRead.style.background = '#A8DF8E';
+        cardHeader.style.background = '#A8DF8E';
+        setData();
+    }
+
+    const bookNotRead = (book) => {
+        book.isRead = false;
+        cardRead.textContent = 'Not read';
+        cardRead.style.background = '#96B6C5';
+        cardHeader.style.background = '#96B6C5';
+        setData();
+    }
+
     if (book.isRead) {
-        cardRead.textContent = 'Read'
-        cardRead.style.background = '#A8DF8E'
-        cardHeader.style.background = '#A8DF8E'
+        bookRead(book)
     } else {
-        cardRead.textContent = 'Not read'
-        cardRead.style.background = '#FF6969'
-        cardHeader.style.background = '#FF6969'
+        bookNotRead(book)
     }
 
     cardRead.addEventListener('click', () => {
         if (cardRead.textContent === 'Read') {
-            cardRead.textContent = 'Not read';
-            cardRead.style.background = '#FF6969'
-            cardHeader.style.background = '#FF6969'
+            bookNotRead(book)
         } else {
-            cardRead.textContent = 'Read';
-            cardRead.style.background = '#A8DF8E'
-            cardHeader.style.background = '#A8DF8E'
+            bookRead(book)
         }
     });
 
@@ -119,26 +129,14 @@ const createBookCard = (book) => {
 
     bookContainer.append(card)
 
-    // ! The cardNumber is not yet adjusting to its index/length when some card is removed
-
     bookNumber.textContent = `# ${library.indexOf(book) + 1}`;
 
     removeCard.addEventListener('click', () => {
-        library.splice(card, 1)
+        library.splice(library.indexOf(book), 1)
         setData()
         render()
     })
 }
-
-// Clear input fields after adding a book
-const clearInputFields = () => {
-    document.getElementById('form_title').value = '';
-    document.getElementById('form_author').value = '';
-    document.getElementById('form_page').value = '';
-    document.getElementById('form_read').checked = false;
-}
-
-addBook.addEventListener('click', updateBook)
 
 function setData() {
     localStorage.setItem(`library`, JSON.stringify(library));
@@ -154,5 +152,7 @@ function restore() {
         render();
     }
 }
+
+addBook.addEventListener('click', updateBook)
 
 restore();
