@@ -29,8 +29,19 @@ const getBookDetails = () => {
 
 const updateBook = () => {
     let newBook = getBookDetails()
-    createBookCard(newBook)
+    library.push(newBook)
+    setData()
+    render()
     clearInputFields()
+}
+
+function render() {
+    const books = document.querySelectorAll('.book-item');
+    books.forEach(book => bookContainer.removeChild(book));
+
+    for (let i = 0; i < library.length; i++) {
+        createBookCard(library[i]);
+    }
 }
 
 const createBookCard = (book) => {
@@ -69,24 +80,27 @@ const createBookCard = (book) => {
 
     cardTitle.textContent = book.title
     cardAuthor.textContent = book.author
-    removeCard.textContent = 'Remove'
+    removeCard.innerHTML = '<i class="fa-solid fa-trash-can"></i>'
 
     if (book.isRead) {
         cardRead.textContent = 'Read'
-        cardRead.classList.add('btn-success')
+        cardRead.style.background = '#A8DF8E'
+        cardHeader.style.background = '#A8DF8E'
     } else {
         cardRead.textContent = 'Not read'
-        cardRead.classList.add('btn-danger')
+        cardRead.style.background = '#FF6969'
+        cardHeader.style.background = '#FF6969'
     }
 
     cardRead.addEventListener('click', () => {
-        cardRead.classList.toggle('btn-success');
-        cardRead.classList.toggle('btn-danger');
-
         if (cardRead.textContent === 'Read') {
             cardRead.textContent = 'Not read';
+            cardRead.style.background = '#FF6969'
+            cardHeader.style.background = '#FF6969'
         } else {
             cardRead.textContent = 'Read';
+            cardRead.style.background = '#A8DF8E'
+            cardHeader.style.background = '#A8DF8E'
         }
     });
 
@@ -98,7 +112,7 @@ const createBookCard = (book) => {
     // * card
 
     let card = document.createElement('div');
-    card.className = 'card'
+    card.className = 'card book-item'
 
     card.append(cardHeader)
     card.append(cardBody)
@@ -107,13 +121,12 @@ const createBookCard = (book) => {
 
     // ! The cardNumber is not yet adjusting to its index/length when some card is removed
 
-    library.push(card)
-
-    bookNumber.textContent = `# ${library.length}`;
+    bookNumber.textContent = `# ${library.indexOf(book) + 1}`;
 
     removeCard.addEventListener('click', () => {
-        bookContainer.removeChild(card)
         library.splice(card, 1)
+        setData()
+        render()
     })
 }
 
@@ -126,3 +139,20 @@ const clearInputFields = () => {
 }
 
 addBook.addEventListener('click', updateBook)
+
+function setData() {
+    localStorage.setItem(`library`, JSON.stringify(library));
+}
+
+function restore() {
+    if (!localStorage.library) {
+        render();
+    } else {
+        let objects = localStorage.getItem('library')
+        objects = JSON.parse(objects);
+        library = objects;
+        render();
+    }
+}
+
+restore();
