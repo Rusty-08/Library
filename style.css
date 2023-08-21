@@ -7,8 +7,9 @@
     font-family: 'Poppins', sans-serif;
 }
 
-body {
+#main {
     background-color: #EEF0F8;
+    position: relative;
 }
 
 .navbar {
