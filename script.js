@@ -1,17 +1,17 @@
 // TODO: create a create a object constructor to get the added book
 // TODO: create a card to display in the container
 
-const bookContainer = document.querySelector('.books-container');
+const bookContainer = document.querySelector('.books-container')
 const addBook = document.getElementById('add-submit')
 const bookForm = document.getElementById('book-form')
 
 let library = []
 class Book {
     constructor(
-        title = 'Unknown',
-        author = 'Unknown',
-        page = '0',
-        isRead = false
+        title,
+        author,
+        page,
+        isRead
     ) {
         this.title = title,
             this.author = author,
@@ -21,9 +21,9 @@ class Book {
 }
 
 const getBookDetails = () => {
-    const book_title = document.getElementById('form_title').value
-    const book_author = document.getElementById('form_author').value
-    const book_page = document.getElementById('form_page').value
+    const book_title = document.getElementById('form_title').value || 'Unknown'
+    const book_author = document.getElementById('form_author').value || 'Unknown'
+    const book_page = document.getElementById('form_page').value || 0
     const book_isRead = document.getElementById('form_read').checked
     return new Book(book_title, book_author, book_page, book_isRead)
 }
@@ -46,10 +46,12 @@ function render() {
 }
 
 const createBookCard = (book) => {
+
     // * card header
-    let bookNumber = document.createElement('p');
-    let bookPage = document.createElement('p');
-    let cardHeader = document.createElement('div');
+
+    let bookNumber = document.createElement('p')
+    let bookPage = document.createElement('p')
+    let cardHeader = document.createElement('div')
 
     bookNumber.setAttribute('id', 'book-number')
     bookPage.setAttribute('id', 'page')
@@ -62,6 +64,7 @@ const createBookCard = (book) => {
     cardHeader.append(bookPage)
 
     // * card body
+
     let cardTitle = document.createElement('h5');
     let cardAuthor = document.createElement('p');
     let cardRead = document.createElement('a');
@@ -86,18 +89,18 @@ const createBookCard = (book) => {
 
     const bookRead = (book) => {
         book.isRead = true;
-        cardRead.textContent = 'Read';
-        cardRead.style.background = '#A8DF8E';
-        cardHeader.style.background = '#A8DF8E';
-        setData();
+        cardRead.textContent = 'Completed'
+        cardRead.style.background = '#A8DF8E'
+        cardHeader.style.background = '#A8DF8E'
+        setData()
     }
 
     const bookNotRead = (book) => {
-        book.isRead = false;
-        cardRead.textContent = 'Not read';
-        cardRead.style.background = '#96B6C5';
-        cardHeader.style.background = '#96B6C5';
-        setData();
+        book.isRead = false
+        cardRead.textContent = 'Incomplete'
+        cardRead.style.background = '#96B6C5'
+        cardHeader.style.background = '#96B6C5'
+        setData()
     }
 
     if (book.isRead) {
@@ -107,21 +110,19 @@ const createBookCard = (book) => {
     }
 
     cardRead.addEventListener('click', () => {
-        if (cardRead.textContent === 'Read') {
+        if (cardRead.textContent === 'Completed') {
             bookNotRead(book)
         } else {
             bookRead(book)
         }
-    });
+    })
 
     cardBody.append(cardTitle)
     cardBody.append(cardAuthor)
     cardBody.append(cardRead)
     cardBody.append(removeCard)
 
-    // * card
-
-    let card = document.createElement('div');
+    let card = document.createElement('div')
     card.className = 'card book-item'
 
     card.append(cardHeader)
@@ -129,7 +130,7 @@ const createBookCard = (book) => {
 
     bookContainer.append(card)
 
-    bookNumber.textContent = `# ${library.indexOf(book) + 1}`;
+    bookNumber.textContent = `# ${library.indexOf(book) + 1}`
 
     removeCard.addEventListener('click', () => {
         library.splice(library.indexOf(book), 1)
@@ -139,12 +140,12 @@ const createBookCard = (book) => {
 }
 
 function setData() {
-    localStorage.setItem(`library`, JSON.stringify(library));
+    localStorage.setItem(`library`, JSON.stringify(library))
 }
 
 function restore() {
     if (!localStorage.library) {
-        render();
+        render()
     } else {
         let objects = localStorage.getItem('library')
         objects = JSON.parse(objects);
