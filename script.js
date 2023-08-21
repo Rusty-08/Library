@@ -4,6 +4,7 @@
 const bookContainer = document.querySelector('.books-container')
 const addBook = document.getElementById('add-submit')
 const bookForm = document.getElementById('book-form')
+const date = document.getElementById('date');
 
 let library = []
 class Book {
@@ -155,5 +156,8 @@ function restore() {
 }
 
 addBook.addEventListener('click', updateBook)
+
+const currDate = new Date();
+date.textContent = currDate.getFullYear()
 
 restore();

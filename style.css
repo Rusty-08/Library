@@ -26,7 +26,10 @@ body {
 }
 
 .head {
-    background-color: rgba(115, 166, 221, 0.3);
+    background-color: rgb(214, 227, 243);
+    position: sticky;
+    top: 4rem;
+    z-index: 1;
 }
 
 .add-book {
@@ -68,4 +71,38 @@ body {
 
 .modal-dialog {
     margin-top: calc((100vh - 462px) / 2) !important;
+}
+
+.owner {
+    position: absolute;
+    bottom: 0.5rem;
+    padding: 0.3rem 1rem;
+    left: calc(50% - (207px / 2))
+}
+
+.fa-copyright {
+    margin-right: 0.3rem;
+}
+
+#date {
+    margin-right: 1rem;
+    position: relative;
+}
+
+#date::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 0.5px;
+    right: -0.5rem;
+    background-color: rgba(0, 36, 74, 0.5);
+}
+
+.owner span, .owner i {
+    font-size: 1rem;
+    color: rgb(0, 36, 74);
+}
+
+.owner a:hover {
+    opacity: 1 !important;
 }
